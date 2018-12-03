@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     name="ecs",
     version="0.0.1",
-    author="Avikor",
+    author="avikor",
     author_email="44028161+avikor@users.noreply.github.com",
     description="An Entity–Component–System (ECS) framework for writing games with pygame.",
     long_description=long_description,
