@@ -24,20 +24,20 @@ Consequently we would also need to implement a draw and erase systems (routines)
 As well as a mover system, which would move the spaceship.  
 Now, should we want to implement yet another entity, say a plane, we could use our already implemented  
 Graphics and Velocity and components, name a new plane entity, and use our current systems to move the plane around.  
-Other than the plane entity, no new class or routine is required.
+Other than the plane entity, no new class or routine should implemented.
   
 Using traditional OOP design, we could've implemented an abstract GameObject class, and have each new class / entity / type  
 instance / whatever inherit GameObject.  
 Now say we want to implement a graphic object which does not move, some of the approaches to solve this might include:
 1. Instancing the object with zero horizontal and vertical speeds.
 2. Removing the velocity logic from GameObject class, and implementing it only in the Spaceship and Plane classes.
-3. Defining a new abstract class which inherits from GameObject, that has velocity. We could name it MovableGameObject,  
+3. Define a new abstract class which inherits from GameObject, that has velocity. We could name it MovableGameObject,  
 and have Spaceship and Plane classes inherit it.
 4. There are other solutions of course...
  
 Yet ECS saves us all this trouble, all the while not using polymorphism and inheritance, which should be avoided like the plague.  
 If we want to define an entity which does not move, simply make a container of a single Graphics Component.  
-Hence ECS adheres to composition over inheritance principle, which allows greater flexibility in defining entities.  
+Hence ECS adheres to composition over inheritance principle, which allows greater flexibility in design.  
 
 ## Some Implementation details
 All implemented components can be found in 'component.py', similarly for systems and 'systems.py'.  
