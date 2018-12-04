@@ -2,9 +2,9 @@
 This repository stores an Entity Component System implementation of the aliens game, first implemented as pygame library  
 toy example. The original source code of the game can be view [here](https://github.com/xamox/pygame/blob/master/examples/aliens.py).  
   
-  Some Gameplay:  
+Some Gameplay:  
   
-[![Aliens Gameplay](https://i.imgur.com/wKjxeW1.png)](https://streamable.com/iye6w)
+[![Aliens Gameplay](https://i.imgur.com/Z7Z2t2k.png)](https://streamable.com/iye6w)
 
 
 ## Entity Component System
