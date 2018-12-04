@@ -10,7 +10,7 @@ from entity_component_system.entities_manager import EntitiesManager, get_compon
 from examples.aliens_game.aliens_game_systems import move_aliens_system, move_shots_system, move_bombs_system, \
     handle_afv_collision, detect_shot_at_aliens_system
 from entity_component_system.systems import erase_system, draw_system, rotate_animation_cycle_system, \
-    move_player_controlled_horizontal_entity_system, collision_detection_with_handling_system, decrease_lifetime_system
+    move_horizontally_oriented_entity_system, collision_detection_with_handling_system, decrease_lifetime_system
 
 
 RESOLUTION = 640, 480
@@ -294,7 +294,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
 
         x_direction = keys_state[pygame.K_RIGHT] - keys_state[pygame.K_LEFT]
         if x_direction != NO_MOVEMENT:
-            move_player_controlled_horizontal_entity_system(afv, x_direction, right_edge)
+            move_horizontally_oriented_entity_system(afv, x_direction, right_edge)
 
         shots_mover.join()
         aliens_mover.join()

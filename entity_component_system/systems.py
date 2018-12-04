@@ -42,7 +42,7 @@ def rewrite_text_system(entity_composed_of_graphics_and_text_components: List[Co
     graphics_compo.surface = text_compo.font.render(text_compo.text, False, text_compo.color)
 
 
-def move_player_controlled_horizontal_entity_system(entity: List[Component], curr_x_direction: int, right_edge: int) \
+def move_horizontally_oriented_entity_system(entity: List[Component], curr_x_direction: int, right_edge: int) \
         -> None:
     graphics_compo = get_component_of_entity(entity, GraphicsComponent)
     velocity_compo = get_component_of_entity(entity, VelocityComponent)
