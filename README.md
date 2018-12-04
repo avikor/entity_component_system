@@ -1,5 +1,5 @@
 ## Aliens Game
-This repository stores an Entity Component System implementation of the aliens game, first implemented as pygame library  
+This repository stores an Entity-Component-System implementation of the aliens game, first implemented as pygame library  
 toy example. The original source code of the game can be view [here](https://github.com/xamox/pygame/blob/master/examples/aliens.py).  
   
 Some game play:  
@@ -26,8 +26,7 @@ Now, should we want to implement yet another entity, say a plane, we could use o
 Graphics and Velocity and components, name a new plane entity, and use our current systems to move the plane around.  
 Other than the plane entity, no new class or routine should implemented.
   
-Using traditional OOP design, we could've implemented an abstract GameObject class, and have each new class / entity / type  
-instance / whatever inherit GameObject.  
+Using traditional OOP design, we could've implemented an abstract GameObject class, and have each new class inherit it.    
 Now say we want to implement a graphic object which does not move, some of the approaches to solve this might include:
 1. Instancing the object with zero horizontal and vertical speeds.
 2. Removing the velocity logic from GameObject class, and implementing it only in the Spaceship and Plane classes.
@@ -37,9 +36,27 @@ and have Spaceship and Plane classes inherit it.
  
 Yet ECS saves us all this trouble, all the while not using polymorphism and inheritance, which should be avoided like the plague.  
 If we want to define an entity which does not move, simply make a container of a single Graphics Component.  
-Hence ECS adheres to composition over inheritance principle, which allows greater flexibility in design.  
+Thus ECS adheres to composition over inheritance principle, which allows greater flexibility in design.  
 
 ## Some Implementation details
-All implemented components can be found in 'component.py', similarly for systems and 'systems.py'.  
-'entities_manager.py' stores an EntitiesManager class, which holds all entities of a game.  
+Implemented components (can be found at 'entity_component_system/component.py'):  
+1. GraphicsComponent.
+2. AnimationCycleComponent.
+3. TextComponent.
+4. VelocityComponent.
+5. HorizontalOrientationComponent.
+6. AudioComponent.
+7. LifeTimeComponent
+
+Implemented systems (can be found at 'entity_component_system/systems.py'):  
+1. erase_system.
+2. draw_system.
+3. rotate_animation_cycle_system.
+4. rewrite_text_system.
+5. move_player_controlled_horizontal_entity_system.
+6. collision_detection_system.
+7. collision_detection_with_handling_system.
+8. decrease_lifetime_system.  
+
+An EntitiesManager class which holds all entities of a game can be found at 'entity_component_system/entities_manager.py'.     
 This class allows for the definitions of new types, instancing of new entities, and all sorts of getters and destructors.

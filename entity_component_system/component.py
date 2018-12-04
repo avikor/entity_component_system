@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta
 from typing import Tuple
 import pygame
 
@@ -8,7 +8,6 @@ RIGHT_DIRECTION = 1
 
 
 class Component(metaclass=ABCMeta):
-    @abstractmethod
     def __init__(self):
         self.entity_id = -1
 
