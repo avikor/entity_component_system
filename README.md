@@ -33,7 +33,7 @@ Now say we wish to implement a graphic object which does not move, some of the a
 1. Instancing the object with zero horizontal and vertical speeds.
 2. Removing the velocity logic from GameObject class, and implementing it only in the spaceship and plane classes.
 3. Implementing a new abstract class which inherits from GameObject, that has velocity. We could name it MovableGameObject,
-and have Spaceship and Plane classes inherit it.
+and have Spaceship and Plane classes inherit it. Thus violating Liskov substitution principle.
 4. There are other solutions as well.
  
 Yet ECS saves us all this trouble, all the while not using polymorphism and inheritance, which should be avoided like the plague.  
