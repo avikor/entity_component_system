@@ -8,9 +8,10 @@ from entity_component_system.component import GraphicsComponent, VelocityCompone
     TextComponent, AudioComponent, LifeTimeComponent, AnimationCycleComponent
 from entity_component_system.entities_manager import EntitiesManager, get_component_of_entity
 from examples.aliens_game.aliens_game_systems import move_aliens_system, move_shots_system, move_bombs_system, \
-    handle_afv_collision, detect_shot_at_aliens_system
+    get_afv_collision_handler, get_shot_at_aliens_handler
 from entity_component_system.systems import erase_system, draw_system, rotate_animation_cycle_system, \
-    move_horizontally_oriented_entity_system, collision_detection_with_handling_system, decrease_lifetime_system
+    move_screen_bounded_horizontally_oriented_entity_system, collision_detection_with_handling_system, \
+    lists_collision_detection_with_handling_system, decrease_lifetime_system
 
 
 RESOLUTION = 640, 480
@@ -294,24 +295,27 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
 
         x_direction = keys_state[pygame.K_RIGHT] - keys_state[pygame.K_LEFT]
         if x_direction != NO_MOVEMENT:
-            move_horizontally_oriented_entity_system(afv, x_direction, right_edge)
+            move_screen_bounded_horizontally_oriented_entity_system(afv, x_direction, right_edge)
 
         shots_mover.join()
         aliens_mover.join()
         aliens_colors_changer.join()
         bombs_mover.join()
 
-        aliens_collisions_handler = Thread(target=detect_shot_at_aliens_system,
-                                           args=(shots_list, aliens_list, entities_manager, name_to_id_map["score_id"],
-                                                 curr_score, ALIEN_HIT_REWARD, explosion_factory, screen, background,
-                                                 dirty_rects))
+        aliens_collisions_handler = Thread(target=lists_collision_detection_with_handling_system,
+                                           args=(shots_list, aliens_list, entities_manager,
+                                                 get_shot_at_aliens_handler(explosion_factory, curr_score,
+                                                                            ALIEN_HIT_REWARD,
+                                                                            name_to_id_map["score_id"], screen,
+                                                                            background, dirty_rects)))
         aliens_collisions_handler.start()
 
         afv_collision_handler = Thread(target=collision_detection_with_handling_system,
-                                       args=(afv, bombs_list + aliens_list, entities_manager, handle_afv_collision,
-                                             name_to_id_map["alien_type_id"], afv_rect,
-                                             name_to_id_map["lives_id"], curr_life, LIFE_PENALTY, explosion_factory,
-                                             screen, background, dirty_rects))
+                                       args=(afv, bombs_list + aliens_list, entities_manager,
+                                             get_afv_collision_handler(name_to_id_map["alien_type_id"], afv_rect,
+                                                                       name_to_id_map["lives_id"], curr_life,
+                                                                       LIFE_PENALTY, explosion_factory, screen,
+                                                                       background, dirty_rects)))
 
         afv_collision_handler.start()
 

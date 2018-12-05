@@ -1,4 +1,4 @@
-from typing import List, Iterable, Callable
+from typing import List, Iterable, Callable, Dict
 import pygame
 from entity_component_system.component import Component, GraphicsComponent, TextComponent, VelocityComponent, \
     HorizontalOrientationComponent, AnimationCycleComponent, LifeTimeComponent, LEFT_DIRECTION, RIGHT_DIRECTION
@@ -57,8 +57,8 @@ def move_system(entities: Iterable[List[Component]],
         off_bounds_handler(graphics_compo, velocity_compo)
 
 
-def move_horizontally_oriented_entity_system(entity: List[Component], curr_x_direction: int, right_edge: int) \
-        -> None:
+def move_screen_bounded_horizontally_oriented_entity_system(entity: List[Component], curr_x_direction: int,
+                                                            right_edge: int) -> None:
     graphics_compo = get_component_of_entity(entity, GraphicsComponent)
     velocity_compo = get_component_of_entity(entity, VelocityComponent)
     hori_ori_compo = get_component_of_entity(entity, HorizontalOrientationComponent)
@@ -86,8 +86,9 @@ def collision_detection_system(entity: List[Component], other_entities: Iterable
 
 
 def collision_detection_with_handling_system(entity: List[Component], other_entities: Iterable[List[Component]],
-                                             entities_manager: EntitiesManager, handler: Callable[..., None], *args,
-                                             **kwargs) -> None:
+                                             entities_manager: EntitiesManager,
+                                             handler: Callable[[Iterable[List[Component]], int, EntitiesManager],
+                                                               None]) -> None:
     entity_rect = get_component_of_entity(entity, GraphicsComponent).rect
     other_entities_rects = list()
     for other_entity in other_entities:
@@ -95,7 +96,39 @@ def collision_detection_with_handling_system(entity: List[Component], other_enti
         other_entities_rects.append(other_entity_graphics_compo.rect)
     collided_entity_idx = entity_rect.collidelist(other_entities_rects)
     if collided_entity_idx != NO_COLLISIONS:
-        handler(other_entities, collided_entity_idx, entities_manager, *args, *kwargs)
+        handler(other_entities, collided_entity_idx, entities_manager)
+
+
+def lists_collision_detection_system(entities: List[List[Component]],
+                                     other_entities: List[List[Component]]) -> Dict[int, List[int]]:
+    """  This system receives two lists of entities, and outputs a dictionary whose keys are indices of entities of the
+         first list, and whose values are indices of the entities of the second list with which the entity of the
+         first list collides with. """
+    other_entities_rects = list()
+    for other_entity in other_entities:
+        other_entities_rects.append(get_component_of_entity(other_entity, GraphicsComponent).rect)
+
+    collisions = dict()
+    for i in range(len(entities)):
+        entity_rect = get_component_of_entity(entities[i], GraphicsComponent).rect
+        collision_indices = entity_rect.collidelistall(other_entities_rects)
+        if collision_indices:
+            collisions[i] = collision_indices
+    return collisions
+
+
+def lists_collision_detection_with_handling_system(entities: List[List[Component]],
+                                                   other_entities: List[List[Component]],
+                                                   entities_manager: EntitiesManager, handler: Callable) -> None:
+    other_entities_rects = list()
+    for other_entity in other_entities:
+        other_entities_rects.append(get_component_of_entity(other_entity, GraphicsComponent).rect)
+
+    for entity in entities:
+        entity_rect = get_component_of_entity(entity, GraphicsComponent).rect
+        collision_indices = entity_rect.collidelistall(other_entities_rects)
+        if collision_indices:
+            handler(entity, other_entities, collision_indices, entities_manager)
 
 
 def decrease_lifetime_system(entities_composed_of_lifetime_compo: Iterable[List[Component]],
