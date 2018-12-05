@@ -1,7 +1,7 @@
 import unittest
 import pygame
 from entity_component_system.component import GraphicsComponent, VelocityComponent, AnimationCycleComponent, \
-    LifeTimeComponent, AudioComponent
+    LifeTimeComponent, HorizontalOrientationComponent
 from entity_component_system.entities_manager import EntitiesManager, get_component_of_entity
 
 
@@ -12,28 +12,26 @@ class TestEntitiesManager(unittest.TestCase):
         self.name_to_id_map["alien_type_id"] = self.entities_manager.add_entity_type([GraphicsComponent,
                                                                                       AnimationCycleComponent,
                                                                                       VelocityComponent])
-        self.name_to_id_map["explosion_type_id"] = self.entities_manager.add_entity_type([GraphicsComponent,
-                                                                                          LifeTimeComponent,
-                                                                                          AudioComponent])
-        alien1_graphics_compo = GraphicsComponent(pygame.image.load("alien1.gif"), 0, 0)
-        alien_ani_cycle_compo = AnimationCycleComponent((pygame.image.load("alien1.gif"),
-                                                         pygame.image.load("alien2.gif"),
-                                                         pygame.image.load("alien3.gif")), 12)
+        self.name_to_id_map["explosion_type_id"] = self.entities_manager.\
+            add_entity_type([GraphicsComponent, LifeTimeComponent, HorizontalOrientationComponent])
+        alien1_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
+        alien_ani_cycle_compo = AnimationCycleComponent((pygame.Surface((13, 13)),
+                                                         pygame.Surface((13, 13)),
+                                                         pygame.Surface((13, 13))), 12)
         alien_velo_compo = VelocityComponent(1, 1)
         self.name_to_id_map["alien1_id"] = self.entities_manager.instantiate_entity(
             self.name_to_id_map["alien_type_id"], alien1_graphics_compo, alien_ani_cycle_compo, alien_velo_compo)
 
-        alien2_graphics_compo = GraphicsComponent(pygame.image.load("alien2.gif"), 0, 0)
+        alien2_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
         self.name_to_id_map["alien2_id"] = self.entities_manager.instantiate_entity(
             self.name_to_id_map["alien_type_id"], alien2_graphics_compo, alien_ani_cycle_compo, VelocityComponent(0, 0))
 
-        explosion_graphics_compo = GraphicsComponent(pygame.image.load("explosion.gif"), 0, 0)
+        explosion_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
         explosion_lifetime_compo = LifeTimeComponent(12)
-        pygame.mixer.init()
-        explosion_audio_compo = AudioComponent(pygame.mixer.Sound("explosion.wav"))
+        hori_ori_compo = HorizontalOrientationComponent(pygame.Surface((13, 13)), pygame.Surface((13, 13)))
         self.name_to_id_map["explosion1_id"] = self.entities_manager.instantiate_entity(
             self.name_to_id_map["explosion_type_id"], explosion_graphics_compo, explosion_lifetime_compo,
-            explosion_audio_compo)
+            hori_ori_compo)
 
     def test_get_all_entities_ids(self):
         self.assertEqual(self.entities_manager.get_all_entities_ids(), {self.name_to_id_map["alien1_id"],
@@ -52,7 +50,7 @@ class TestEntitiesManager(unittest.TestCase):
 
     def test_get_all_component_classes_names(self):
         all_names = {"GraphicsComponent", "AnimationCycleComponent", "VelocityComponent", "LifeTimeComponent",
-                     "AudioComponent"}
+                     "HorizontalOrientationComponent"}
         self.assertEqual(self.entities_manager.get_all_component_classes_names(), all_names)
 
     def test_get_all_entities_of_type(self):
@@ -115,7 +113,7 @@ class TestEntitiesManager(unittest.TestCase):
         self.assertEqual(self.entities_manager.get_all_entities_ids(), {self.name_to_id_map["explosion1_id"]})
         self.assertEqual(self.entities_manager.get_all_component_classes_names(), {"GraphicsComponent",
                                                                                    "LifeTimeComponent",
-                                                                                   "AudioComponent"})
+                                                                                   "HorizontalOrientationComponent"})
 
 
 if __name__ == '__main__':
