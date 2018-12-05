@@ -1,0 +1,14 @@
+language: python
+sudo: required
+dist: xenial
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+install:
+  - pip install codecov
+  - pip install .
+script:
+  - coverage run tests
+after_success:
+  - codecov
