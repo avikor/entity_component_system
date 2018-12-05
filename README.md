@@ -1,3 +1,7 @@
+[![license](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/avikor/constraint_satisfaction_problems/blob/master/LICENSE)
+[![Python Versions](https://img.shields.io/badge/python-3.5%20%7C%203.6%20%7C%203.7-blue.svg)](https://www.python.org/downloads/release/python-350/)
+[![Pygame](https://i.imgur.com/DN3bO38.png)](https://www.python.org/downloads/release/python-350/)
+
 ## Aliens Game
 This repository stores an Entity-Component-System implementation of the Aliens game using the [pygame library](https://www.pygame.org).  
 The Aliens game was first implemented as pygame library toy example.  
