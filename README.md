@@ -19,7 +19,7 @@ The ECS implementation of the Aliens game can be found at 'examples/aliens_game'
 ## Entity Component System
 **Entity–Component–System (ECS)** is an architectural pattern that is mostly used in game development.  
 A **component** is a plain old data structure (POD), i.e. a data structure that is implemented only as passive  
-collections of field values, without any methods or other object oriented features.  
+collections of field values, without any methods.  
 An **entity** is a container of  **components**.  
 A **system** is a routine which implements some part of the game's logic, and is aware of both entities and components.  
 
@@ -31,7 +31,8 @@ We could store both components in a container which we would name a spaceship en
 Consequently we would also need to implement a draw and erase routines (systems), which could draw and erase the spaceship.  
 As well as a mover system, which would move the spaceship.  
 Now, should we want to implement yet another entity, say a plane, we could use our already implemented  
-Graphics and Velocity and components, name a new plane entity, and use our current systems to move the plane around.  
+Graphics and Velocity and components, name a new plane entity, and use our current systems to move the plane around  
+in the same way a spaceship moves, optionally using a different velocity.   
 Other than the plane entity, no new class or routine should be implemented.
   
 Using traditional OOP design, we could've implemented an abstract GameObject class, and have each new class inherit it.    
@@ -67,13 +68,13 @@ Implemented systems (which can be found at 'entity_component_system/systems.py')
 7. collision_detection_with_handling_system.
 8. decrease_lifetime_system.  
 
-An EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
+Additionally, an EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
 This class allows for the definition of new types, instancing of new entities, and all sorts of getters and destructors  
 to be used by various systems.  
 A 'type' is simply an integer which serves as a unique id, along with a list of the various components required to  
 instantiate a new entity of the aforementioned 'type'. You can think of it as a class.  
 Thus several types can be used to define entities which consist of the same components.  
 For example, a spaceship type with graphics and velocity components, and a plane type which consists of different instances the same components.  
-This allows us to move a spaceship differently than a plane, without having to implement a new class, by simply implementing  
-a system that moves planes (without moving the spaceships).  
-Incidentally, ECS adheres to the DRY principle.  
+This allows us to move a spaceship differently than a plane (even if it has the same velocity of a spaceship), without  
+having to implement a new class, by simply implementing a system that moves planes (without moving the spaceships).  
+Thus ECS adheres to the DRY principle.  
