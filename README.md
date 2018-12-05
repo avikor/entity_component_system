@@ -61,9 +61,9 @@ Implemented components (which can be found at 'entity_component_system/component
 Implemented systems (which can be found at 'entity_component_system/systems.py'):  
 1. erase_system.
 2. draw_system.
-3. move_system.
-4. rotate_animation_cycle_system.
-5. rewrite_text_system.
+3. rotate_animation_cycle_system.
+4. rewrite_text_system.
+5. move_system
 6. move_horizontally_oriented_entity_system.
 7. collision_detection_system.
 8. collision_detection_with_handling_system.
