@@ -41,9 +41,11 @@ def move_bombs_system(bombs_list: List[List[Component]], bottom_edge: int, entit
 
 def handle_afv_collision(collided_entities: List[List[Component]], collided_entity_idx: int,
                          entities_manager: EntitiesManager, alien_type_id: int, afv_rect: pygame.Rect, lives_id: int,
-                         curr_life: List[int], life_penalty: int, explosion_factory: Callable[[int, int], int]) -> None:
+                         curr_life: List[int], life_penalty: int, explosion_factory: Callable[[int, int], int],
+                         screen: pygame.Surface, background: pygame.Surface, dirty_rects: List[pygame.Rect]) -> None:
     curr_life[0] -= life_penalty
-    rewrite_text_system(entities_manager.get_entity(lives_id), "Lives: {}".format(curr_life[0]))
+    rewrite_text_system(entities_manager.get_entity(lives_id), "Lives: {}".format(curr_life[0]), screen, background,
+                        dirty_rects)
     explosion_factory(afv_rect.center[0], afv_rect.center[1])
     collided_entity_id = collided_entities[collided_entity_idx][0].entity_id
     if entities_manager.get_entity_type_id(collided_entity_id) == alien_type_id:
@@ -53,7 +55,9 @@ def handle_afv_collision(collided_entities: List[List[Component]], collided_enti
 
 def detect_shot_at_aliens_system(shots_list: List[List[Component]], aliens_list: List[List[Component]],
                                  entities_manager: EntitiesManager, score_id: int, curr_score: List[int],
-                                 alien_hit_reward: int, explosions_factory: Callable[[int, int], int],) -> None:
+                                 alien_hit_reward: int, explosions_factory: Callable[[int, int], int],
+                                 screen: pygame.Surface, background: pygame.Surface, dirty_rects: List[pygame.Rect]) \
+        -> None:
     aliens_rects = list()
     aliens_ids = list()
     for alien in aliens_list:
@@ -69,6 +73,7 @@ def detect_shot_at_aliens_system(shots_list: List[List[Component]], aliens_list:
             alien_rect = get_component_of_entity(alien, GraphicsComponent).rect
             explosions_factory(alien_rect.center[0], alien_rect.center[1])
             curr_score[0] += alien_hit_reward
-            rewrite_text_system(entities_manager.get_entity(score_id), "Score: {}".format(curr_score[0]))
+            rewrite_text_system(entities_manager.get_entity(score_id), "Score: {}".format(curr_score[0]), screen,
+                                background, dirty_rects)
             entities_manager.remove_entity(alien)
             entities_manager.remove_entity(shot)

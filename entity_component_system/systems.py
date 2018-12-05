@@ -35,11 +35,17 @@ def rotate_animation_cycle_system(entities_composed_of_graphics_and_ani_cycle_li
                 break
 
 
-def rewrite_text_system(entity_composed_of_graphics_and_text_components: List[Component], new_text: str) -> None:
+def rewrite_text_system(entity_composed_of_graphics_and_text_components: List[Component], new_text: str,
+                        screen: pygame.Surface, background: pygame.Surface, dirty_rects: List[pygame.Rect]) -> None:
     graphics_compo = get_component_of_entity(entity_composed_of_graphics_and_text_components, GraphicsComponent)
     text_compo = get_component_of_entity(entity_composed_of_graphics_and_text_components, TextComponent)
     text_compo.text = new_text
+    dirty_rects.append(screen.blit(background, graphics_compo.rect, graphics_compo.rect))
     graphics_compo.surface = text_compo.font.render(text_compo.text, False, text_compo.color)
+    old_rect = graphics_compo.rect
+    graphics_compo.rect = graphics_compo.surface.get_rect()
+    graphics_compo.rect.move_ip(old_rect.x, old_rect.y)
+    dirty_rects.append(screen.blit(graphics_compo.surface, graphics_compo.rect))
 
 
 def move_horizontally_oriented_entity_system(entity: List[Component], curr_x_direction: int, right_edge: int) \
