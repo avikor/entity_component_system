@@ -65,4 +65,9 @@ Implemented systems (which can be found at 'entity_component_system/systems.py')
 8. decrease_lifetime_system.  
 
 An EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
-This class allows for the definitions of new types, instancing of new entities, and all sorts of getters and destructors.
+This class allows for the definition of new types, instancing of new entities, and all sorts of getters and destructors  
+to be used by various systems.  
+A 'type' is simply an integer which serves as a unique id, along with a list of the various components required to  
+instantiate a new entity of the aforementioned 'type'. You can think of it as a class.  
+Thus several types can be used to define entities which consist of the same components.  
+For example, a spaceship type with graphics and velocity components, and a plane type with graphics and velocity components.     
