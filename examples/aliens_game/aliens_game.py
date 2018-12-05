@@ -252,9 +252,8 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
         if keys_state[pygame.K_ESCAPE] or pygame.event.peek(pygame.QUIT):
             break
 
-        dirty_rects.extend(ecs.erase_system(screen, background,
-                                            entities_manager.get_all_instances_of_component_class(ecs.
-                                                                                                  GraphicsComponent)))
+        ecs.erase_system(screen, background,
+                         entities_manager.get_all_instances_of_component_class(ecs.GraphicsComponent), dirty_rects)
 
         explosions_list = list(entities_manager.get_all_entities_of_type(name_to_id_map["explosion_type_id"]))
         explosions_lifetime_handler = Thread(target=ecs.decrease_lifetime_system,
@@ -323,8 +322,8 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
         afv_collision_handler.join()
         explosions_lifetime_handler.join()
 
-        dirty_rects.extend(ecs.draw_system(screen, entities_manager.get_all_instances_of_component_class(
-            ecs.GraphicsComponent)))
+        ecs.draw_system(screen, entities_manager.get_all_instances_of_component_class(ecs.GraphicsComponent),
+                        dirty_rects)
 
         pygame.display.update(dirty_rects)
         dirty_rects.clear()

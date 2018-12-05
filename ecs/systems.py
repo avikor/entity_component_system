@@ -8,19 +8,16 @@ from ecs.entities_manager import EntitiesManager, get_component_of_entity
 NO_COLLISIONS = -1
 
 
-def erase_system(screen: pygame.Surface, background: pygame.Surface, graphics_components: Iterable[GraphicsComponent]) \
-        -> List[pygame.Rect]:
-    dirty_rects = list()
+def erase_system(screen: pygame.Surface, background: pygame.Surface, graphics_components: Iterable[GraphicsComponent],
+                 dirty_rects: List[pygame.Rect]) -> None:
     for graphics_compo in graphics_components:
         dirty_rects.append(screen.blit(background, graphics_compo.rect, graphics_compo.rect))
-    return dirty_rects
 
 
-def draw_system(screen: pygame.Surface, graphics_components: Iterable[GraphicsComponent]) -> List[pygame.Rect]:
-    dirty_rects = list()
+def draw_system(screen: pygame.Surface, graphics_components: Iterable[GraphicsComponent],
+                dirty_rects: List[pygame.Rect]) -> None:
     for graphics_compo in graphics_components:
         dirty_rects.append(screen.blit(graphics_compo.surface, graphics_compo.rect))
-    return dirty_rects
 
 
 def rotate_animation_cycle_system(entities_composed_of_graphics_and_ani_cycle_list: Iterable[List[Component]]) -> None:
