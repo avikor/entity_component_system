@@ -75,4 +75,5 @@ instantiate a new entity of the aforementioned 'type'. You can think of it as a 
 Thus several types can be used to define entities which consist of the same components.  
 For example, a spaceship type with graphics and velocity components, and a plane type which consists of different instances the same components.  
 This allows us to move a spaceship differently than a plane, without having to implement a new class, by simply implementing  
-a system that moves planes (without moving the spaceships).    
+a system that moves planes (without moving the spaceships).  
+Incidentally, ECS adheres to the DRY principle.  
