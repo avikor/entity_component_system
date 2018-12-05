@@ -12,9 +12,9 @@ class Component(metaclass=ABCMeta):
         self.entity_id = -1
 
 
-class GraphicsComponent(Component):
+class GraphicComponent(Component):
     def __init__(self, surface: pygame.Surface, initial_x: int, initial_y: int) -> None:
-        super(GraphicsComponent, self).__init__()
+        super(GraphicComponent, self).__init__()
         self.surface = surface
         self.rect = self.surface.get_rect()
         self.rect.move_ip(initial_x, initial_y)

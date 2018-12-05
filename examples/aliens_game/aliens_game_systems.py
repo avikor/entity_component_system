@@ -4,33 +4,33 @@ import ecs
 
 
 def move_aliens_system(aliens_list: List[List[ecs.Component]], right_edge: int) -> None:
-    def aliens_off_bounds_handler(graphics_compo: ecs.GraphicsComponent, velocity_compo: ecs.VelocityComponent) -> None:
-        if graphics_compo.rect.left > right_edge:
-            graphics_compo.rect.left = right_edge
-        elif graphics_compo.rect.right < 0:
-            graphics_compo.rect.right = 0
-        if graphics_compo.rect.left == right_edge or graphics_compo.rect.right == 0:
+    def aliens_off_bounds_handler(graphic_compo: ecs.GraphicComponent, velocity_compo: ecs.VelocityComponent) -> None:
+        if graphic_compo.rect.left > right_edge:
+            graphic_compo.rect.left = right_edge
+        elif graphic_compo.rect.right < 0:
+            graphic_compo.rect.right = 0
+        if graphic_compo.rect.left == right_edge or graphic_compo.rect.right == 0:
             velocity_compo.x_velocity *= -1
-            graphics_compo.rect.top = graphics_compo.rect.bottom + 1
+            graphic_compo.rect.top = graphic_compo.rect.bottom + 1
 
     ecs.move_system(aliens_list, aliens_off_bounds_handler)
 
 
 def move_shots_system(shots_list: List[List[ecs.Component]], entities_manager: ecs.EntitiesManager, shot_type_id: int) \
         -> None:
-    def shots_off_bounds_handler(graphics_compo: ecs.GraphicsComponent, velocity_compo: ecs.VelocityComponent) -> None:
-        if graphics_compo.rect.bottom < 0:
-            entities_manager.remove_entity_by_type_id_and_entity_id(shot_type_id, graphics_compo.entity_id)
+    def shots_off_bounds_handler(graphic_compo: ecs.GraphicComponent, velocity_compo: ecs.VelocityComponent) -> None:
+        if graphic_compo.rect.bottom < 0:
+            entities_manager.remove_entity_by_type_id_and_entity_id(shot_type_id, graphic_compo.entity_id)
 
     ecs.move_system(shots_list, shots_off_bounds_handler)
 
 
 def move_bombs_system(bombs_list: List[List[ecs.Component]], bottom_edge: int, entities_manager: ecs.EntitiesManager,
                       bomb_type_id: int, explosions_factory: Callable[[int, int], int]) -> None:
-    def bombs_off_bounds_handler(graphics_compo: ecs.GraphicsComponent, velocity_compo: ecs.VelocityComponent) -> None:
-        if bottom_edge < graphics_compo.rect.bottom:
-            explosions_factory(graphics_compo.rect.center[0], graphics_compo.rect.center[1])
-            entities_manager.remove_entity_by_type_id_and_entity_id(bomb_type_id, graphics_compo.entity_id)
+    def bombs_off_bounds_handler(graphic_compo: ecs.GraphicComponent, velocity_compo: ecs.VelocityComponent) -> None:
+        if bottom_edge < graphic_compo.rect.bottom:
+            explosions_factory(graphic_compo.rect.center[0], graphic_compo.rect.center[1])
+            entities_manager.remove_entity_by_type_id_and_entity_id(bomb_type_id, graphic_compo.entity_id)
 
     ecs.move_system(bombs_list, bombs_off_bounds_handler)
 
@@ -47,7 +47,7 @@ def get_afv_collision_handler(alien_type_id: int, afv_rect: pygame.Rect, lives_i
         explosion_factory(afv_rect.center[0], afv_rect.center[1])
         collided_entity_id = collided_entities[collided_entity_idx][0].entity_id
         if entities_manager.get_entity_type_id(collided_entity_id) == alien_type_id:
-            alien_rect = ecs.get_component_of_entity(collided_entities[collided_entity_idx], ecs.GraphicsComponent).rect
+            alien_rect = ecs.get_component_of_entity(collided_entities[collided_entity_idx], ecs.GraphicComponent).rect
             explosion_factory(alien_rect.center[0], alien_rect.center[1])
     return afv_collision_handler
 
@@ -59,7 +59,7 @@ def get_shot_at_aliens_handler(explosions_factory: Callable[[int, int], int], cu
     def handle_shot_at_aliens(shot: List[ecs.Component], aliens: List[List[ecs.Component]],
                               collision_indices: List[int], entities_manager: ecs.EntitiesManager) -> None:
         killed_alien = aliens[collision_indices[0]]
-        killed_alien_rect = ecs.get_component_of_entity(killed_alien, ecs.GraphicsComponent).rect
+        killed_alien_rect = ecs.get_component_of_entity(killed_alien, ecs.GraphicComponent).rect
         explosions_factory(killed_alien_rect.center[0], killed_alien_rect.center[1])
         curr_score[0] += alien_hit_reward
         ecs.rewrite_text_system(entities_manager.get_entity(score_id), "Score: {}".format(curr_score[0]), screen,

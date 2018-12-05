@@ -1,6 +1,6 @@
 import unittest
 import pygame
-from ecs.component import GraphicsComponent, VelocityComponent, AnimationCycleComponent, \
+from ecs.component import GraphicComponent, VelocityComponent, AnimationCycleComponent, \
     LifeTimeComponent, HorizontalOrientationComponent
 from ecs.entities_manager import EntitiesManager, get_component_of_entity
 
@@ -9,12 +9,12 @@ class TestEntitiesManager(unittest.TestCase):
     def setUp(self):
         self.entities_manager = EntitiesManager()
         self.name_to_id_map = dict()
-        self.name_to_id_map["alien_type_id"] = self.entities_manager.add_entity_type([GraphicsComponent,
+        self.name_to_id_map["alien_type_id"] = self.entities_manager.add_entity_type([GraphicComponent,
                                                                                       AnimationCycleComponent,
                                                                                       VelocityComponent])
         self.name_to_id_map["explosion_type_id"] = self.entities_manager.\
-            add_entity_type([GraphicsComponent, LifeTimeComponent, HorizontalOrientationComponent])
-        alien1_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
+            add_entity_type([GraphicComponent, LifeTimeComponent, HorizontalOrientationComponent])
+        alien1_graphics_compo = GraphicComponent(pygame.Surface((13, 13)), 0, 0)
         alien_ani_cycle_compo = AnimationCycleComponent((pygame.Surface((13, 13)),
                                                          pygame.Surface((13, 13)),
                                                          pygame.Surface((13, 13))), 12)
@@ -22,11 +22,11 @@ class TestEntitiesManager(unittest.TestCase):
         self.name_to_id_map["alien1_id"] = self.entities_manager.instantiate_entity(
             self.name_to_id_map["alien_type_id"], alien1_graphics_compo, alien_ani_cycle_compo, alien_velo_compo)
 
-        alien2_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
+        alien2_graphics_compo = GraphicComponent(pygame.Surface((13, 13)), 0, 0)
         self.name_to_id_map["alien2_id"] = self.entities_manager.instantiate_entity(
             self.name_to_id_map["alien_type_id"], alien2_graphics_compo, alien_ani_cycle_compo, VelocityComponent(0, 0))
 
-        explosion_graphics_compo = GraphicsComponent(pygame.Surface((13, 13)), 0, 0)
+        explosion_graphics_compo = GraphicComponent(pygame.Surface((13, 13)), 0, 0)
         explosion_lifetime_compo = LifeTimeComponent(12)
         hori_ori_compo = HorizontalOrientationComponent(pygame.Surface((13, 13)), pygame.Surface((13, 13)))
         self.name_to_id_map["explosion1_id"] = self.entities_manager.instantiate_entity(
@@ -49,7 +49,7 @@ class TestEntitiesManager(unittest.TestCase):
                                                                              self.name_to_id_map["explosion_type_id"]})
 
     def test_get_all_component_classes_names(self):
-        all_names = {"GraphicsComponent", "AnimationCycleComponent", "VelocityComponent", "LifeTimeComponent",
+        all_names = {"GraphicComponent", "AnimationCycleComponent", "VelocityComponent", "LifeTimeComponent",
                      "HorizontalOrientationComponent"}
         self.assertEqual(self.entities_manager.get_all_component_classes_names(), all_names)
 
@@ -85,7 +85,7 @@ class TestEntitiesManager(unittest.TestCase):
 
     def test_get_entity_type_component_classes_names(self):
         self.assertEqual(set(self.entities_manager.get_entity_type_component_classes_names(
-            self.name_to_id_map["alien_type_id"])), {"GraphicsComponent", "AnimationCycleComponent",
+            self.name_to_id_map["alien_type_id"])), {"GraphicComponent", "AnimationCycleComponent",
                                                      "VelocityComponent"})
 
     def test_get_entity_id(self):
@@ -111,7 +111,7 @@ class TestEntitiesManager(unittest.TestCase):
     def test_remove_entity_type_and_its_instances(self):
         self.entities_manager.remove_entity_type_and_its_instances(self.name_to_id_map["alien_type_id"])
         self.assertEqual(self.entities_manager.get_all_entities_ids(), {self.name_to_id_map["explosion1_id"]})
-        self.assertEqual(self.entities_manager.get_all_component_classes_names(), {"GraphicsComponent",
+        self.assertEqual(self.entities_manager.get_all_component_classes_names(), {"GraphicComponent",
                                                                                    "LifeTimeComponent",
                                                                                    "HorizontalOrientationComponent"})
 

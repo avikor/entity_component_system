@@ -120,91 +120,90 @@ def add_types_and_instantiate_entities(images: List[pygame.Surface], entities_ma
 
 def instantiate_alien(images: List[pygame.Surface], entities_manager: ecs.EntitiesManager,
                       name_to_id_map: Dict[str, int]) -> None:
-    alien_type_id = entities_manager.add_entity_type([ecs.GraphicsComponent, ecs.AnimationCycleComponent,
+    alien_type_id = entities_manager.add_entity_type([ecs.GraphicComponent, ecs.AnimationCycleComponent,
                                                       ecs.VelocityComponent])
     name_to_id_map["alien_type_id"] = alien_type_id
-    alien_graphics_compo = ecs.GraphicsComponent(images[ImgsIndices.alien1], ALIEN_INITIAL_POSITION[0],
-                                                 ALIEN_INITIAL_POSITION[1])
+    alien_graphic_compo = ecs.GraphicComponent(images[ImgsIndices.alien1], ALIEN_INITIAL_POSITION[0],
+                                               ALIEN_INITIAL_POSITION[1])
     alien_ani_cycle_compo = ecs.AnimationCycleComponent((images[ImgsIndices.alien1], images[ImgsIndices.alien2],
                                                          images[ImgsIndices.alien3]), ALIEN_ANIMATION_INTERVAL_LENGTH)
     alien_velocity_compo = ecs.VelocityComponent(ALIEN_VELOCITY[0], ALIEN_VELOCITY[1])
-    name_to_id_map["alien_id"] = entities_manager.instantiate_entity(alien_type_id, alien_graphics_compo,
+    name_to_id_map["alien_id"] = entities_manager.instantiate_entity(alien_type_id, alien_graphic_compo,
                                                                      alien_ani_cycle_compo, alien_velocity_compo)
 
 
 def add_bomb_type(entities_manager: ecs.EntitiesManager, name_to_id_map: Dict[str, int]) -> None:
-    name_to_id_map["bomb_type_id"] = entities_manager.add_entity_type([ecs.GraphicsComponent, ecs.VelocityComponent])
+    name_to_id_map["bomb_type_id"] = entities_manager.add_entity_type([ecs.GraphicComponent, ecs.VelocityComponent])
 
 
 def instantiate_afv(images: List[pygame.Surface], entities_manager: ecs.EntitiesManager,
                     name_to_id_map: Dict[str, int]) -> None:
-    name_to_id_map["afv_type_id"] = entities_manager.add_entity_type([ecs.GraphicsComponent,
+    name_to_id_map["afv_type_id"] = entities_manager.add_entity_type([ecs.GraphicComponent,
                                                                       ecs.HorizontalOrientationComponent,
                                                                       ecs.VelocityComponent])
-    afv_graphics_compo = ecs.GraphicsComponent(images[ImgsIndices.afv], AFV_INITIAL_POSITION[0],
-                                               AFV_INITIAL_POSITION[1])
+    afv_graphic_compo = ecs.GraphicComponent(images[ImgsIndices.afv], AFV_INITIAL_POSITION[0], AFV_INITIAL_POSITION[1])
     afv_hori_ori_compo = ecs.HorizontalOrientationComponent(images[ImgsIndices.afv],
                                                             pygame.transform.flip(images[ImgsIndices.afv], True, False))
     afv_velocity_compo = ecs.VelocityComponent(AFV_VELOCITY[0], AFV_VELOCITY[1])
-    name_to_id_map["afv_id"] = entities_manager.instantiate_entity(name_to_id_map["afv_type_id"], afv_graphics_compo,
+    name_to_id_map["afv_id"] = entities_manager.instantiate_entity(name_to_id_map["afv_type_id"], afv_graphic_compo,
                                                                    afv_hori_ori_compo, afv_velocity_compo)
 
 
 def add_shot_type(entities_manager: ecs.EntitiesManager, name_to_id_map: Dict[str, int]) -> None:
-    name_to_id_map["shot_type_id"] = entities_manager.add_entity_type([ecs.GraphicsComponent, ecs.VelocityComponent,
+    name_to_id_map["shot_type_id"] = entities_manager.add_entity_type([ecs.GraphicComponent, ecs.VelocityComponent,
                                                                        ecs.AudioComponent])
 
 
 def add_explosion_type(entities_manager: ecs.EntitiesManager, name_to_id_map: Dict[str, int]) -> None:
-    name_to_id_map["explosion_type_id"] = entities_manager.add_entity_type([ecs.GraphicsComponent,
+    name_to_id_map["explosion_type_id"] = entities_manager.add_entity_type([ecs.GraphicComponent,
                                                                             ecs.LifeTimeComponent, ecs.AudioComponent])
 
 
 def instantiate_score_and_lives(entities_manager: ecs.EntitiesManager, name_to_id_map: Dict[str, int]) -> None:
-    text_type_id = entities_manager.add_entity_type([ecs.GraphicsComponent, ecs.TextComponent])
+    text_type_id = entities_manager.add_entity_type([ecs.GraphicComponent, ecs.TextComponent])
     name_to_id_map["text_type_id"] = text_type_id
 
     lives_text_component = ecs.TextComponent("Lives: {}".format(INITIAL_PLAYER_LIFE), LIVES_TEXT_SIZE, LIVES_TEXT_COLOR)
     lives_surface = lives_text_component.font.render(lives_text_component.text, False, lives_text_component.color)
-    lives_graphics_component = ecs.GraphicsComponent(lives_surface, LIVES_POSITION[0], LIVES_POSITION[1])
-    lives_id = entities_manager.instantiate_entity(text_type_id, lives_graphics_component, lives_text_component)
+    lives_graphic_component = ecs.GraphicComponent(lives_surface, LIVES_POSITION[0], LIVES_POSITION[1])
+    lives_id = entities_manager.instantiate_entity(text_type_id, lives_graphic_component, lives_text_component)
     name_to_id_map["lives_id"] = lives_id
 
     score_text_component = ecs.TextComponent("Score: {}".format(INITIAL_PLAYER_SCORE), SCORE_TEXT_SIZE,
                                              SCORE_TEXT_COLOR)
     score_surface = score_text_component.font.render(score_text_component.text, False, score_text_component.color)
-    score_graphics_component = ecs.GraphicsComponent(score_surface, SCORE_POSITION[0], SCORE_POSITION[1])
-    score_id = entities_manager.instantiate_entity(text_type_id, score_graphics_component, score_text_component)
+    score_graphic_component = ecs.GraphicComponent(score_surface, SCORE_POSITION[0], SCORE_POSITION[1])
+    score_id = entities_manager.instantiate_entity(text_type_id, score_graphic_component, score_text_component)
     name_to_id_map["score_id"] = score_id
 
 
 def get_alien_factory(entities_manager: ecs.EntitiesManager, alien_type_id: int, alien_surface: pygame.Surface,
                       cyc_surfaces: Tuple[pygame.Surface, ...]) -> Callable[[int, int], int]:
     def alien_factory(initial_x: int, initial_y: int) -> int:
-        graphics_compo = ecs.GraphicsComponent(alien_surface, initial_x, initial_y)
+        graphic_compo = ecs.GraphicComponent(alien_surface, initial_x, initial_y)
         ani_cycle_compo = ecs.AnimationCycleComponent(cyc_surfaces, ALIEN_ANIMATION_INTERVAL_LENGTH)
         velocity_compo = ecs.VelocityComponent(ALIEN_VELOCITY[0], ALIEN_VELOCITY[1])
-        return entities_manager.instantiate_entity(alien_type_id, graphics_compo, ani_cycle_compo, velocity_compo)
+        return entities_manager.instantiate_entity(alien_type_id, graphic_compo, ani_cycle_compo, velocity_compo)
     return alien_factory
 
 
 def get_bomb_factory(entities_manager: ecs.EntitiesManager, bomb_type_id: int, bomb_surface: pygame.Surface) \
         -> Callable[[int, int], int]:
     def bomb_factory(initial_x: int, initial_y: int) -> int:
-        graphics_compo = ecs.GraphicsComponent(bomb_surface, initial_x, initial_y)
+        graphic_compo = ecs.GraphicComponent(bomb_surface, initial_x, initial_y)
         velocity_compo = ecs.VelocityComponent(BOMB_VELOCITY[0], BOMB_VELOCITY[1])
-        return entities_manager.instantiate_entity(bomb_type_id, graphics_compo, velocity_compo)
+        return entities_manager.instantiate_entity(bomb_type_id, graphic_compo, velocity_compo)
     return bomb_factory
 
 
 def get_shot_factory(entities_manager: ecs.EntitiesManager, shot_type_id: int, shot_surface: pygame.Surface,
                      shot_sound: pygame.mixer.Sound) -> Callable[[int, int], int]:
     def shot_factory(initial_x: int, initial_y: int) -> int:
-        graphics_compo = ecs.GraphicsComponent(shot_surface, initial_x, initial_y)
+        graphic_compo = ecs.GraphicComponent(shot_surface, initial_x, initial_y)
         velocity_compo = ecs.VelocityComponent(SHOT_VELOCITY[0], SHOT_VELOCITY[1])
         audio_compo = ecs.AudioComponent(shot_sound)
         audio_compo.sound.play()
-        return entities_manager.instantiate_entity(shot_type_id, graphics_compo, velocity_compo, audio_compo)
+        return entities_manager.instantiate_entity(shot_type_id, graphic_compo, velocity_compo, audio_compo)
     return shot_factory
 
 
@@ -212,11 +211,11 @@ def get_explosion_factory(entities_manager: ecs.EntitiesManager, explosion_type_
                           explosion_surface: pygame.Surface, explosion_sound: pygame.mixer.Sound) \
         -> Callable[[int, int], int]:
     def explosion_factory(initial_x: int, initial_y: int) -> int:
-        graphics_compo = ecs.GraphicsComponent(explosion_surface, initial_x, initial_y)
+        graphic_compo = ecs.GraphicComponent(explosion_surface, initial_x, initial_y)
         lifetime_compo = ecs.LifeTimeComponent(EXPLOSION_LIFE_TIME)
         audio_compo = ecs.AudioComponent(explosion_sound)
         audio_compo.sound.play()
-        return entities_manager.instantiate_entity(explosion_type_id, graphics_compo, lifetime_compo, audio_compo)
+        return entities_manager.instantiate_entity(explosion_type_id, graphic_compo, lifetime_compo, audio_compo)
     return explosion_factory
 
 
@@ -235,7 +234,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
     right_edge = background.get_width()
     bomb_bottom_edge = background.get_height() - images[ImgsIndices.explosion].get_height() + BOMB_EDGE_OFFSET
     afv = entities_manager.get_entity(name_to_id_map["afv_id"])
-    afv_rect = ecs.get_component_of_entity(afv, ecs.GraphicsComponent).rect
+    afv_rect = ecs.get_component_of_entity(afv, ecs.GraphicComponent).rect
 
     is_player_reloading = False
     curr_life = [INITIAL_PLAYER_LIFE]
@@ -254,7 +253,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
             break
 
         ecs.erase_system(screen, background,
-                         entities_manager.get_all_instances_of_component_class(ecs.GraphicsComponent), dirty_rects)
+                         entities_manager.get_all_instances_of_component_class(ecs.GraphicComponent), dirty_rects)
 
         explosions_list = list(entities_manager.get_all_entities_of_type(name_to_id_map["explosion_type_id"]))
         explosions_lifetime_handler = Thread(target=ecs.decrease_lifetime_system,
@@ -267,7 +266,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
         aliens_list = list(entities_manager.get_all_entities_of_type(name_to_id_map["alien_type_id"]))
 
         if aliens_list and random() < BOMB_INSTANTIATION_PROBABILITY:
-            last_alien_rect = ecs.get_component_of_entity(aliens_list[-1], ecs.GraphicsComponent).rect
+            last_alien_rect = ecs.get_component_of_entity(aliens_list[-1], ecs.GraphicComponent).rect
             if last_alien_rect.left > 0 and last_alien_rect.right < right_edge:
                 bomb_initial_x, bomb_initial_y = last_alien_rect.move(BOMB_OFFSET[0], BOMB_OFFSET[1]).midbottom
                 bomb_factory(bomb_initial_x, bomb_initial_y)
@@ -323,7 +322,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
         afv_collision_handler.join()
         explosions_lifetime_handler.join()
 
-        ecs.draw_system(screen, entities_manager.get_all_instances_of_component_class(ecs.GraphicsComponent),
+        ecs.draw_system(screen, entities_manager.get_all_instances_of_component_class(ecs.GraphicComponent),
                         dirty_rects)
 
         pygame.display.update(dirty_rects)

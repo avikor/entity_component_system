@@ -50,7 +50,7 @@ Incidentally, ECS adheres to composition over inheritance principle, which allow
 
 ## Some Implementation details
 Implemented components (which can be found at 'entity_component_system/component.py'):  
-1. GraphicsComponent.
+1. GraphicComponent.
 2. AnimationCycleComponent.
 3. TextComponent.
 4. VelocityComponent.
