@@ -7,7 +7,7 @@
 
 ## Aliens Game
 This repository stores an Entity-Component-System implementation of the Aliens game using the [pygame library](https://www.pygame.org).  
-The Aliens game was first implemented as pygame library toy example.  
+The Aliens game was first implemented as a pygame-library game-example.  
 The original source code of the game can be viewed [here](https://github.com/xamox/pygame/blob/master/examples/aliens.py).  
   
 A small bit of Aliens game play:  
