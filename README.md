@@ -64,10 +64,12 @@ Implemented systems (which can be found at 'entity_component_system/systems.py')
 3. rotate_animation_cycle_system.
 4. rewrite_text_system.
 5. move_system
-6. move_horizontally_oriented_entity_system.
+6. move_screen_bounded_horizontally_oriented_entity_system.
 7. collision_detection_system.
 8. collision_detection_with_handling_system.
-9. decrease_lifetime_system.  
+9. lists_collision_detection_system
+10. lists_collision_detection_with_handling_system.
+11. decrease_lifetime_system.  
 
 Additionally, an EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
 This class allows for the definition of new types, instancing of new entities, and all sorts of getters and destructors  
