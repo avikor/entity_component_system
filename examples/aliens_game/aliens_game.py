@@ -315,8 +315,8 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
 
         afv_collision_handler.start()
 
-        afv_collision_handler.join()
         aliens_collisions_handler.join()
+        afv_collision_handler.join()
         explosions_lifetime_handler.join()
 
         dirty_rects.extend(draw_system(screen,
