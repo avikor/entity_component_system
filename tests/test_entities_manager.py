@@ -1,8 +1,8 @@
 import unittest
 import pygame
-from entity_component_system.component import GraphicsComponent, VelocityComponent, AnimationCycleComponent, \
+from ecs.component import GraphicsComponent, VelocityComponent, AnimationCycleComponent, \
     LifeTimeComponent, HorizontalOrientationComponent
-from entity_component_system.entities_manager import EntitiesManager, get_component_of_entity
+from ecs.entities_manager import EntitiesManager, get_component_of_entity
 
 
 class TestEntitiesManager(unittest.TestCase):

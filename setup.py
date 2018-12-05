@@ -11,7 +11,7 @@ setuptools.setup(
     description="An Entity–Component–System (ECS) framework for writing games with pygame.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/avikor/entity_component_system",
+    url="https://github.com/avikor/ecs",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3.5.6",

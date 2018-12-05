@@ -1,8 +1,8 @@
 from typing import List, Iterable, Callable, Dict
 import pygame
-from entity_component_system.component import Component, GraphicsComponent, TextComponent, VelocityComponent, \
+from ecs.component import Component, GraphicsComponent, TextComponent, VelocityComponent, \
     HorizontalOrientationComponent, AnimationCycleComponent, LifeTimeComponent, LEFT_DIRECTION, RIGHT_DIRECTION
-from entity_component_system.entities_manager import EntitiesManager, get_component_of_entity
+from ecs.entities_manager import EntitiesManager, get_component_of_entity
 
 
 NO_COLLISIONS = -1

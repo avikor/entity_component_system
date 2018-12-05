@@ -2,7 +2,7 @@ from random import getrandbits
 from collections import OrderedDict
 from typing import Iterator, Type, List, ValuesView, KeysView, Any
 from operator import attrgetter
-from entity_component_system.component import Component
+from ecs.component import Component
 
 
 RANDOM_BITS_AMOUNT = 32
