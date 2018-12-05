@@ -119,7 +119,8 @@ def lists_collision_detection_with_handling_system(entities: List[List[Component
                                                    entities_manager: EntitiesManager,
                                                    handler: Callable[[List[Component], List[List[Component]],
                                                                       List[int], EntitiesManager], None]) -> None:
-    """  This system receives two lists of entities, and calls """
+    """  This system receives two lists of entities, and calls the collision handler whenever an entity from the first
+         list collided with entities from the second list. """
     other_entities_rects = list()
     for other_entity in other_entities:
         other_entities_rects.append(get_component_of_entity(other_entity, GraphicComponent).rect)
