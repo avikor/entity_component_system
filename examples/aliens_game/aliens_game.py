@@ -141,7 +141,8 @@ def instantiate_afv(images: List[pygame.Surface], entities_manager: ecs.Entities
     name_to_id_map["afv_type_id"] = entities_manager.add_entity_type([ecs.GraphicsComponent,
                                                                       ecs.HorizontalOrientationComponent,
                                                                       ecs.VelocityComponent])
-    afv_graphics_compo = ecs.GraphicsComponent(images[ImgsIndices.afv], AFV_INITIAL_POSITION[0], AFV_INITIAL_POSITION[1])
+    afv_graphics_compo = ecs.GraphicsComponent(images[ImgsIndices.afv], AFV_INITIAL_POSITION[0],
+                                               AFV_INITIAL_POSITION[1])
     afv_hori_ori_compo = ecs.HorizontalOrientationComponent(images[ImgsIndices.afv],
                                                             pygame.transform.flip(images[ImgsIndices.afv], True, False))
     afv_velocity_compo = ecs.VelocityComponent(AFV_VELOCITY[0], AFV_VELOCITY[1])
@@ -208,7 +209,7 @@ def get_shot_factory(entities_manager: ecs.EntitiesManager, shot_type_id: int, s
 
 
 def get_explosion_factory(entities_manager: ecs.EntitiesManager, explosion_type_id: int,
-                          explosion_surface: pygame.Surface,explosion_sound: pygame.mixer.Sound) \
+                          explosion_surface: pygame.Surface, explosion_sound: pygame.mixer.Sound) \
         -> Callable[[int, int], int]:
     def explosion_factory(initial_x: int, initial_y: int) -> int:
         graphics_compo = ecs.GraphicsComponent(explosion_surface, initial_x, initial_y)
