@@ -48,6 +48,15 @@ def rewrite_text_system(entity_composed_of_graphics_and_text_components: List[Co
     dirty_rects.append(screen.blit(graphics_compo.surface, graphics_compo.rect))
 
 
+def move_system(entities: Iterable[List[Component]],
+                off_bounds_handler: Callable[[GraphicsComponent, VelocityComponent], None]):
+    for entity in entities:
+        graphics_compo = get_component_of_entity(entity, GraphicsComponent)
+        velocity_compo = get_component_of_entity(entity, VelocityComponent)
+        graphics_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
+        off_bounds_handler(graphics_compo, velocity_compo)
+
+
 def move_horizontally_oriented_entity_system(entity: List[Component], curr_x_direction: int, right_edge: int) \
         -> None:
     graphics_compo = get_component_of_entity(entity, GraphicsComponent)

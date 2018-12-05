@@ -2,14 +2,11 @@ from typing import List, Callable
 import pygame
 from entity_component_system.component import Component, GraphicsComponent, VelocityComponent
 from entity_component_system.entities_manager import EntitiesManager, get_component_of_entity
-from entity_component_system.systems import rewrite_text_system, NO_COLLISIONS
+from entity_component_system.systems import move_system, rewrite_text_system, NO_COLLISIONS
 
 
 def move_aliens_system(aliens_list: List[List[Component]], right_edge: int) -> None:
-    for alien in aliens_list:
-        graphics_compo = get_component_of_entity(alien, GraphicsComponent)
-        velocity_compo = get_component_of_entity(alien, VelocityComponent)
-        graphics_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
+    def aliens_off_bounds_handler(graphics_compo: GraphicsComponent, velocity_compo: VelocityComponent) -> None:
         if graphics_compo.rect.left > right_edge:
             graphics_compo.rect.left = right_edge
         elif graphics_compo.rect.right < 0:
@@ -18,25 +15,25 @@ def move_aliens_system(aliens_list: List[List[Component]], right_edge: int) -> N
             velocity_compo.x_velocity *= -1
             graphics_compo.rect.top = graphics_compo.rect.bottom + 1
 
+    move_system(aliens_list, aliens_off_bounds_handler)
+
 
 def move_shots_system(shots_list: List[List[Component]], entities_manager: EntitiesManager, shot_type_id: int) -> None:
-    for shot in shots_list:
-        graphics_compo = get_component_of_entity(shot, GraphicsComponent)
-        velocity_compo = get_component_of_entity(shot, VelocityComponent)
-        graphics_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
+    def shots_off_bounds_handler(graphics_compo: GraphicsComponent, velocity_compo: VelocityComponent) -> None:
         if graphics_compo.rect.bottom < 0:
             entities_manager.remove_entity_by_type_id_and_entity_id(shot_type_id, graphics_compo.entity_id)
+
+    move_system(shots_list, shots_off_bounds_handler)
 
 
 def move_bombs_system(bombs_list: List[List[Component]], bottom_edge: int, entities_manager: EntitiesManager,
                       bomb_type_id: int, explosions_factory: Callable[[int, int], int]) -> None:
-    for bomb in bombs_list:
-        graphics_compo = get_component_of_entity(bomb, GraphicsComponent)
-        velocity_compo = get_component_of_entity(bomb, VelocityComponent)
-        graphics_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
+    def bombs_off_bounds_handler(graphics_compo: GraphicsComponent, velocity_compo: VelocityComponent) -> None:
         if bottom_edge < graphics_compo.rect.bottom:
             explosions_factory(graphics_compo.rect.center[0], graphics_compo.rect.center[1])
             entities_manager.remove_entity_by_type_id_and_entity_id(bomb_type_id, graphics_compo.entity_id)
+
+    move_system(bombs_list, bombs_off_bounds_handler)
 
 
 def handle_afv_collision(collided_entities: List[List[Component]], collided_entity_idx: int,
