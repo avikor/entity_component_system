@@ -27,7 +27,7 @@ def rotate_animation_cycle_system(entities_composed_of_graphic_and_ani_cycle_lis
         for additional_surface in ani_cycle_compo.surfaces:
             if graphic_compo.surface == additional_surface:
                 ani_cycle_compo.ani_cycle_count += 1
-                idx = ani_cycle_compo.ani_cycle_count // ani_cycle_compo.interval_len % len(ani_cycle_compo.surfaces)
+                idx = (ani_cycle_compo.ani_cycle_count // ani_cycle_compo.interval_len) % len(ani_cycle_compo.surfaces)
                 graphic_compo.surface = ani_cycle_compo.surfaces[idx]
                 break
 
