@@ -63,11 +63,11 @@ Implemented systems (which can be found at 'ecs/systems.py'):
 2. draw_system.
 3. rotate_animation_cycle_system.
 4. rewrite_text_system.
-5. move_system
+5. move_system.
 6. move_screen_bounded_horizontally_oriented_entity_system.
 7. collision_detection_system.
 8. collision_detection_with_handling_system.
-9. lists_collision_detection_system
+9. lists_collision_detection_system.
 10. lists_collision_detection_with_handling_system.
 11. decrease_lifetime_system.  
 
