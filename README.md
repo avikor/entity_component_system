@@ -44,7 +44,7 @@ Now say we wish to implement a graphic object which does not move, some of the a
 and have Spaceship and Plane classes inherit it. Thus violating Liskov substitution principle.
 4. There are other solutions as well.
  
-Yet ECS saves us all this trouble, all the while not using polymorphism and over bloated inheritance trees, which should be avoided like the plague.  
+Yet ECS saves us all this trouble, all the while not using polymorphism and bloated inheritance trees, which should be avoided like the plague.  
 If we want to define an entity which does not move, simply make a container of a single Graphics Component.  
 In this fashion, ECS adheres to *composition over inheritance principle*, which allows greater flexibility in design.  
 
