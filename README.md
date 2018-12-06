@@ -86,8 +86,7 @@ Some of its methods include:
 A 'type' is simply an integer which serves as a unique id, along with a list of the various components required to  
 instantiate a new entity of the aforementioned 'type'. You can think of it as a class.  
 Thus several types can be used to define entities which consist of the same components.  
-For example, a spaceship type with graphics and velocity components, and a plane type which consists of of the same components,  
-albeit using different instances of them.  
+For example, a spaceship type with graphics and velocity components, and a plane type which consists of of the same components, albeit using different instances of them.  
 This allows us to move a plane differently than a spaceship (even if it has the same velocity of a spaceship), without  
 having to implement a new class.   
 Thus ECS adheres to the *DRY principle*.  
