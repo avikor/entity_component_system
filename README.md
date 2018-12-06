@@ -82,6 +82,7 @@ Some of its methods include:
 5. get_all_instances_of_component_class.
 6. remove_entity.
 7. remove_entity_type_and_its_entities.
+
 A 'type' is simply an integer which serves as a unique id, along with a list of the various components required to  
 instantiate a new entity of the aforementioned 'type'. You can think of it as a class.  
 Thus several types can be used to define entities which consist of the same components.  
