@@ -49,6 +49,7 @@ def get_afv_collision_handler(alien_type_id: int, afv_rect: pygame.Rect, lives_i
         if entities_manager.get_entity_type_id(collided_entity_id) == alien_type_id:
             alien_rect = ecs.get_component_of_entity(collided_entities[collided_entity_idx], ecs.GraphicComponent).rect
             explosion_factory(alien_rect.center[0], alien_rect.center[1])
+
     return afv_collision_handler
 
 
