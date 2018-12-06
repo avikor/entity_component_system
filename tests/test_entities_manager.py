@@ -109,7 +109,7 @@ class TestEntitiesManager(unittest.TestCase):
                                                                         self.name_to_id_map["alien2_id"]})
 
     def test_remove_entity_type_and_its_instances(self):
-        self.entities_manager.remove_entity_type_and_its_instances(self.name_to_id_map["alien_type_id"])
+        self.entities_manager.remove_entity_type_and_its_entities(self.name_to_id_map["alien_type_id"])
         self.assertEqual(self.entities_manager.get_all_entities_ids(), {self.name_to_id_map["explosion1_id"]})
         self.assertEqual(self.entities_manager.get_all_component_classes_names(), {"GraphicComponent",
                                                                                    "LifeTimeComponent",

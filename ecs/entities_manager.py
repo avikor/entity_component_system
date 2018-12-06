@@ -108,7 +108,7 @@ class EntitiesManager:
         type_id = self.get_entity_type_id(entity_id)
         self.remove_entity_by_type_id_and_entity_id(type_id, entity_id)
 
-    def remove_entity_type_and_its_instances(self, type_id: int) -> None:
+    def remove_entity_type_and_its_entities(self, type_id: int) -> None:
         if type_id not in self.__type_id_to_component_classes_names.keys():
             raise ValueError()
 

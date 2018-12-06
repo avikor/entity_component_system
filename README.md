@@ -29,14 +29,14 @@ Graphics Component, which would store data concerning as to how to display the s
 We would also need a Velocity Component which would store data regarding the spaceship's speed in both horizontal and vertical axis.  
 We could store both components in a container which we would name a spaceship entity.  
 Consequently we would also need to implement a draw and erase routines (systems), which could draw and erase the spaceship.  
-As well as a mover system, which would move the spaceship.  
+And a mover system as well, which would move the spaceship according to its velocity.  
 Now, should we want to implement yet another entity, say a plane, we could use our already implemented  
 Graphics and Velocity and components, name a new plane entity, and use our current systems to move the plane around  
-in the same way a spaceship moves, optionally using a different velocity.   
+in the same way we move a spaceship, optionally by using a different velocity.   
 Other than the plane entity, no new class or routine should be implemented.
   
 Using traditional OOP design, we could've implemented an abstract GameObject class, and have each new class inherit it.    
-Thus if we want a plane instance, which behaves a bit differently from an alien spaceship, we need to implement a new plane class.  
+Thus if we want a plane instance, which behaves a bit differently from an alien spaceship, we would've needed to implement a new plane class.  
 Now say we wish to implement a graphic object which does not move, some of the approaches to solve this might include:
 1. Instancing the object with zero horizontal and vertical speeds.
 2. Removing the velocity logic from GameObject class, and implementing it only in the spaceship and plane classes.
@@ -44,9 +44,9 @@ Now say we wish to implement a graphic object which does not move, some of the a
 and have Spaceship and Plane classes inherit it. Thus violating Liskov substitution principle.
 4. There are other solutions as well.
  
-Yet ECS saves us all this trouble, all the while not using polymorphism and inheritance, which should be avoided like the plague.  
+Yet ECS saves us all this trouble, all the while not using polymorphism and over bloated inheritance trees, which should be avoided like the plague.  
 If we want to define an entity which does not move, simply make a container of a single Graphics Component.  
-Incidentally, ECS adheres to composition over inheritance principle, which allows greater flexibility in design.  
+In this fashion, ECS adheres to *composition over inheritance principle*, which allows greater flexibility in design.  
 
 ## Some Implementation details
 Implemented components (which can be found at 'entity_component_system/component.py'):  
@@ -74,10 +74,19 @@ Implemented systems (which can be found at 'entity_component_system/systems.py')
 Additionally, an EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
 This class allows for the definition of new types, instancing of new entities, and all sorts of getters and destructors  
 to be used by various systems.  
+Some of its methods include:
+1. add_entity_type.
+2. instantiate_entity.
+3. get_all_entities_of_type.
+4. get_all_entities_with_component_class.
+5. get_all_instances_of_component_class.
+6. remove_entity.
+7. remove_entity_type_and_its_entities.
 A 'type' is simply an integer which serves as a unique id, along with a list of the various components required to  
 instantiate a new entity of the aforementioned 'type'. You can think of it as a class.  
 Thus several types can be used to define entities which consist of the same components.  
-For example, a spaceship type with graphics and velocity components, and a plane type which consists of different instances the same components.  
+For example, a spaceship type with graphics and velocity components, and a plane type which consists of of the same components,  
+albeit using different instances of them.  
 This allows us to move a plane differently than a spaceship (even if it has the same velocity of a spaceship), without  
-having to implement a new class, by simply implementing a system that moves planes (without moving the spaceships).  
-Thus ECS adheres to the DRY principle.  
+having to implement a new class.   
+Thus ECS adheres to the *DRY principle*.  
