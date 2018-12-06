@@ -49,7 +49,7 @@ If we want to define an entity which does not move, simply make a container of a
 In this fashion, ECS adheres to *composition over inheritance principle*, which allows greater flexibility in design.  
 
 ## Some Implementation details
-Implemented components (which can be found at 'entity_component_system/component.py'):  
+Implemented components (which can be found at 'ecs/component.py'):  
 1. GraphicComponent.
 2. AnimationCycleComponent.
 3. TextComponent.
@@ -58,7 +58,7 @@ Implemented components (which can be found at 'entity_component_system/component
 6. AudioComponent.
 7. LifeTimeComponent
 
-Implemented systems (which can be found at 'entity_component_system/systems.py'):  
+Implemented systems (which can be found at 'ecs/systems.py'):  
 1. erase_system.
 2. draw_system.
 3. rotate_animation_cycle_system.
@@ -71,7 +71,7 @@ Implemented systems (which can be found at 'entity_component_system/systems.py')
 10. lists_collision_detection_with_handling_system.
 11. decrease_lifetime_system.  
 
-Additionally, an EntitiesManager class which stores all entities can be found at 'entity_component_system/entities_manager.py'.     
+Additionally, an EntitiesManager class which stores all entities can be found at 'ecs/entities_manager.py'.     
 This class allows for the definition of new types, instancing of new entities, and all sorts of getters and destructors  
 to be used by various systems.  
 Some of its methods include:
