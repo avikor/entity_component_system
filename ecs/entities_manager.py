@@ -21,7 +21,7 @@ _name_getter = attrgetter("__name__")
 class EntitiesManager:
     def __init__(self) -> None:
         self.__id_to_entity = OrderedDict()                             # 1. Dict[int, List[Component]]
-        self.__type_id_to_component_classes_names = OrderedDict()       # 2. Dict[int, List[str]
+        self.__type_id_to_component_classes_names = OrderedDict()       # 2. Dict[int, List[str]]
         self.__type_id_to_entities_ids = OrderedDict()                  # 3. Dict[int, List[int]]
         self.__component_class_name_to_entities_ids = OrderedDict()     # 4. Dict[str, List[int]]
 
