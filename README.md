@@ -63,12 +63,11 @@ Implemented systems (which can be found at 'ecs/systems.py'):
 3. rotate_animation_cycle_system.
 4. rewrite_text_system.
 5. move_system.
-6. move_horizontally_oriented_entity_system.
-7. collision_detection_system.
-8. collision_detection_with_handling_system.
-9. lists_collision_detection_system.
-10. lists_collision_detection_with_handling_system.
-11. decrease_lifetime_system.  
+6. collision_detection_system.
+7. collision_detection_with_handling_system.
+8. lists_collision_detection_system.
+9. lists_collision_detection_with_handling_system.
+10. decrease_lifetime_system.  
 
 Additionally, an EntitiesManager class which stores all entities can be found at 'ecs/entities_manager.py'.     
 This class organizes our entities by groups and components. For example, it allows fast retrieval of all components  

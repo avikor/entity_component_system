@@ -181,6 +181,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
     right_edge = background.get_width()
     bomb_bottom_edge = background.get_height() - images[ImgsIndices.explosion].get_height() + BOMB_EDGE_OFFSET
     afv_rect = afv["GraphicComponent"].rect
+    afv_tpl = (afv,)
 
     afv_off_bounds_handler = get_afv_off_bounds_handler(right_edge)
     aliens_off_bounds_handler = get_aliens_off_bounds_handler(right_edge)
@@ -247,7 +248,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
 
         x_direction = keys_state[pygame.K_RIGHT] - keys_state[pygame.K_LEFT]
         if x_direction != NO_MOVEMENT:
-            ecs.move_horizontally_oriented_entity_system(afv, x_direction, afv_off_bounds_handler)
+            ecs.move_system(afv_tpl, afv_off_bounds_handler, x_direction)
 
         shots_mover.join()
         aliens_mover.join()

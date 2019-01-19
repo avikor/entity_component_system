@@ -44,30 +44,24 @@ def rewrite_text_system(screen: pygame.Surface, background: pygame.Surface, dirt
     dirty_rects.append(screen.blit(graphic_compo.surface, graphic_compo.rect))
 
 
-def move_system(entities: Iterable[Entity], off_bounds_handler: Callable[[Entity], None]) -> None:
+def move_system(entities: Iterable[Entity], off_bounds_handler: Callable[[Entity], None], curr_x_direction: int = 0) \
+        -> None:
     for entity in entities:
         graphic_compo = entity["GraphicComponent"]
         velocity_compo = entity["VelocityComponent"]
-        graphic_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
+        if "HorizontalOrientationComponent" in entity and curr_x_direction != 0:
+            hori_ori_compo = entity["HorizontalOrientationComponent"]
+            if hori_ori_compo.last_horizontal_direction != curr_x_direction:
+                if curr_x_direction == LEFT_DIRECTION:
+                    graphic_compo.surface = hori_ori_compo.left_oriented_surface
+                    hori_ori_compo.last_horizontal_direction = LEFT_DIRECTION
+                elif curr_x_direction == RIGHT_DIRECTION:
+                    graphic_compo.surface = hori_ori_compo.right_oriented_surface
+                    hori_ori_compo.last_horizontal_direction = RIGHT_DIRECTION
+            graphic_compo.rect.move_ip(velocity_compo.x_velocity * curr_x_direction, velocity_compo.y_velocity)
+        else:
+            graphic_compo.rect.move_ip(velocity_compo.x_velocity, velocity_compo.y_velocity)
         off_bounds_handler(entity)
-
-
-def move_horizontally_oriented_entity_system(entity: Entity, curr_x_direction: int,
-                                             off_bounds_handler: Callable[[Entity], None]):
-    graphic_compo = entity["GraphicComponent"]
-    velocity_compo = entity["VelocityComponent"]
-    hori_ori_compo = entity["HorizontalOrientationComponent"]
-
-    if hori_ori_compo.last_horizontal_direction != curr_x_direction:
-        if curr_x_direction == LEFT_DIRECTION:
-            graphic_compo.surface = hori_ori_compo.left_oriented_surface
-            hori_ori_compo.last_horizontal_direction = LEFT_DIRECTION
-        elif curr_x_direction == RIGHT_DIRECTION:
-            graphic_compo.surface = hori_ori_compo.right_oriented_surface
-            hori_ori_compo.last_horizontal_direction = RIGHT_DIRECTION
-
-    graphic_compo.rect.move_ip(velocity_compo.x_velocity * curr_x_direction, velocity_compo.y_velocity)
-    off_bounds_handler(entity)
 
 
 def collision_detection_system(entity: Entity, other_entities: Iterable[Entity]) -> int:
