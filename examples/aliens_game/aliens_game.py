@@ -223,7 +223,7 @@ def game_loop(screen: pygame.Surface, background: pygame.Surface, images: List[p
 
         if aliens_list and random() < BOMB_INSTANTIATION_PROBABILITY:
             last_alien_rect = aliens_list[-1]["GraphicComponent"].rect
-            if last_alien_rect.left > 0 and last_alien_rect.right < right_edge:
+            if 0 < last_alien_rect.left and last_alien_rect.right < right_edge:
                 bomb_initial_x, bomb_initial_y = last_alien_rect.move(BOMB_OFFSET[0], BOMB_OFFSET[1]).midbottom
                 bomb_factory(bomb_initial_x, bomb_initial_y)
         bombs_list = list(entities_manager.get_all_entities_of_group("bombs"))
