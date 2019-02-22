@@ -24,7 +24,6 @@ class AnimationCycleComponent:
 
 class TextComponent:
     def __init__(self, text: str, size: int, color: str):
-        super(TextComponent, self).__init__()
         self.text = text
         self.size = size
         self.color = pygame.color.Color(color)
@@ -33,7 +32,6 @@ class TextComponent:
 
 class VelocityComponent:
     def __init__(self, x_velocity: int, y_velocity: int) -> None:
-        super(VelocityComponent, self).__init__()
         self.x_velocity = x_velocity
         self.y_velocity = y_velocity
 
@@ -51,11 +49,9 @@ class HorizontalOrientationComponent:
 
 class AudioComponent:
     def __init__(self, sound: pygame.mixer.Sound) -> None:
-        super(AudioComponent, self).__init__()
         self.sound = sound
 
 
 class LifeTimeComponent:
     def __init__(self, life_time: int) -> None:
-        super(LifeTimeComponent, self).__init__()
         self.life_time = life_time
