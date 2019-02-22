@@ -8,7 +8,6 @@ RIGHT_DIRECTION = 1
 
 class GraphicComponent:
     def __init__(self, surface: pygame.Surface, initial_x: int, initial_y: int) -> None:
-        super(GraphicComponent, self).__init__()
         self.surface = surface
         self.rect = self.surface.get_rect()
         self.rect.move_ip(initial_x, initial_y)
@@ -16,7 +15,6 @@ class GraphicComponent:
 
 class AnimationCycleComponent:
     def __init__(self, surfaces: Tuple[pygame.Surface, ...], interval_length: int) -> None:
-        super(AnimationCycleComponent, self).__init__()
         self.surfaces = surfaces
         self.interval_len = interval_length
         self.ani_cycle_count = 0
@@ -41,7 +39,6 @@ class HorizontalOrientationComponent:
                  last_horizontal_direction: int = LEFT_DIRECTION) -> None:
         if left_oriented_surface is None and right_oriented_surface is None:
             raise ValueError()
-        super(HorizontalOrientationComponent, self).__init__()
         self.left_oriented_surface = left_oriented_surface
         self.right_oriented_surface = right_oriented_surface
         self.last_horizontal_direction = last_horizontal_direction
